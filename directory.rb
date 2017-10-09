@@ -13,8 +13,12 @@ students = [
    "Norman Bates",
 	 ]
 
-# print total student count
+# print introduction
 puts "The students of Villains' Academy"
 puts "-" * 13
+
+# print list of students
 students.each { |s| puts s }
+
+# print total student count
 puts "Overall, we have #{students.length} great students"
