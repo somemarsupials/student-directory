@@ -13,12 +13,20 @@ students = [
    "Norman Bates",
 	 ]
 
+def print_header
+	puts "The students of Villains' Academy"
+	puts "-" * 13
+end
+
+def print_array(arr)
+	arr.each { |s| puts s }
+end
+
+def print_footer(arr)
+	puts "Overall, we have #{arr.length} great students"
+end
+
 # print introduction
-puts "The students of Villains' Academy"
-puts "-" * 13
-
-# print list of students
-students.each { |s| puts s }
-
-# print total student count
-puts "Overall, we have #{students.length} great students"
+print_header
+print_array(students)
+print_footer(students)
