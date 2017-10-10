@@ -1,3 +1,27 @@
+def interactive_menu
+  students = []
+  loop {
+		puts "Menu:"
+    puts "1. Input students"
+    puts "2. Show students"
+    puts "9. Exit" 
+    selection = gets.chomp
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print_array(students)
+      print_footer(students)
+    when "9"
+      exit 
+    else
+      puts "Unknown option, please try again."
+    end
+	}
+end
+
+
 def input_students
 	puts "Please enter the names of the students"
 	puts "To finish, just hit return twice"
@@ -32,8 +56,4 @@ def print_footer(arr)
 	puts "Overall, we have #{arr.length} great students"
 end
 
-# print introduction
-students = input_students
-print_header
-print_array(students)
-print_footer(students)
+interactive_menu
