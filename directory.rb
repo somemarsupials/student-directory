@@ -6,7 +6,7 @@ def print_menu
 	puts "1. Input students"
 	puts "2. Show students"
 	puts "3. Save the list to students.csv"
-	puts "4. Load student list from students.csv"
+	puts "4. Load student list from chosen file"
   puts "9. Exit" 
 end
 
