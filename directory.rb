@@ -42,6 +42,13 @@ def interactive_menu
 	}
 end
 
+# input name and cohort as a student
+# convert cohort to symbol is not already a symbol
+def add_student(name, cohort)
+	cohort = cohort.is_a?(Symbol) ? cohort : cohort.to_sym
+	@students << {name: name, cohort: cohort}
+end
+
 # student input routine
 def input_students
 	puts "Please enter the names of the students"
@@ -52,7 +59,7 @@ def input_students
 	# while name is not empty, repeat this code
 	while !name.empty?
 		# add new hash to the array
-		@students << {name: name, cohort: :november}
+		add_student(name, :november)
 		puts "Now we have #{@students.count} students"
 		# get another name
 		name = STDIN.gets.chomp
@@ -92,8 +99,8 @@ end
 def load_students(path = "students.csv")
   file = File.open(path, 'r')
   file.readlines.each do |line|
-  name, cohort = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym}
+		name, cohort = line.chomp.split(",")
+		add_student(name, cohort)
   end
   file.close
 end
