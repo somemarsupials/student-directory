@@ -104,22 +104,22 @@ end
 # save students to default file
 def save_students
 	path = get_file_name
-	file = File.open(path, "w")
-	@students.each do |student|
-		data = [student[:name], student[:cohort]]
-		file.puts(data.join(","))
+	File.open(path, "w") do |file|
+		@students.each do |student|
+			data = [student[:name], student[:cohort]]
+			file.puts(data.join(","))
+		end
 	end
-	file.close
 	puts "Successfully wrote #{@students.count} students to #{path}"
 end
 
 # load students from given filepath, or defaults to students.csv
 def load_students(path)
-  file = File.open(path, "r")
-  file.readlines.each do |line|
-		add_student(*line.chomp.split(","))
-  end
-  file.close
+  File.open(path, "r") do |file|
+		file.readlines.each do |line|
+			add_student(*line.chomp.split(","))
+		end
+	end
 end
 
 # wrapper around load_students to handle non-existent files
