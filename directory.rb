@@ -60,19 +60,24 @@ def input_students
 	@students
 end
 
+# print first part of student count
+# just a header with an underline
 def print_header
 	puts "The students of Villains' Academy"
 	puts "-" * 13
 end
 
+# print each student and corresponding cohort
 def print_students
 	@students.each { |s| puts "#{s[:name]} (#{s[:cohort]} cohort)" }
 end
 
+# print student count
 def print_footer
 	puts "Overall, we have #{@students.length} great students"
 end
 
+# save students to default file
 def save_students
 	file = File.open("students.csv", "w")
 	@students.each do |student|
@@ -83,6 +88,7 @@ def save_students
 	file.close
 end
 
+# load students from given filepath, or defaults to students.csv
 def load_students(path = "students.csv")
   file = File.open(path, 'r')
   file.readlines.each do |line|
@@ -92,6 +98,7 @@ def load_students(path = "students.csv")
   file.close
 end
 
+# wrapper around load_students to handle non-existent files
 def try_load_students
 	filename = ARGV.first
 	return if filename.nil?
