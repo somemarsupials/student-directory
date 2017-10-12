@@ -36,7 +36,7 @@ def interactive_menu
 		when "3"
 			save_students
 		when "4"
-			load_students
+			try_load_students
     when "9"
       exit 
     else
@@ -108,18 +108,18 @@ def load_students(path = nil)
 	path ||= @path
   file = File.open(path, "r")
   file.readlines.each do |line|
-		add_student(line.chomp.split(","))
+		add_student(*line.chomp.split(","))
   end
   file.close
 end
 
 # wrapper around load_students to handle non-existent files
-# use
+# use default filepath if non specified
 def try_load_students
 	filename = ARGV.first || @path
 	if File.exists?(filename)
 		load_students(filename)
-			puts "loaded #{@students.count} from #{filename}"
+		puts "loaded #{@students.count} from #{filename}"
 	else
 		puts "Sorry, #{filename} doesn't exist."
 		exit
