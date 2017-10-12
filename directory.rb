@@ -104,8 +104,9 @@ def save_students
 end
 
 # load students from given filepath, or defaults to students.csv
-def load_students(path = @path)
-  file = File.open(path, 'r')
+def load_students(path = nil)
+	path ||= @path
+  file = File.open(path, "r")
   file.readlines.each do |line|
 		add_student(line.chomp.split(","))
   end
