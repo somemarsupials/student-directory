@@ -2,14 +2,14 @@
 @students = []
 
 # default filepath
-@path = "students.csv"
+@path = ARGV.first || "students.csv"
 
 # print out the options for the interactive menu
 def print_menu
 	puts "1. Input students"
 	puts "2. Show students"
-	puts "3. Save the list to students.csv"
-	puts "4. Load student list from chosen file"
+	puts "3. Save the list to file"
+	puts "4. Load student list from file"
   puts "9. Exit" 
 end
 
@@ -38,6 +38,7 @@ def interactive_menu
 		when "4"
 			try_load_students
     when "9"
+			puts "Exiting!"
       exit 
     else
       puts "Unknown option, please try again."
@@ -92,20 +93,28 @@ def print_footer
 	puts "Overall, we have #{@students.length} great students"
 end
 
+# get a file-name from user
+def get_file_name
+	puts "Please enter a filename or hit enter to use the default"
+	puts "Hint: default is #{@path}"
+	filename = gets.chomp
+	filename == "" ? @path : filename
+end
+
 # save students to default file
 def save_students
-	file = File.open(@path, "w")
+	path = get_file_name
+	file = File.open(path, "w")
 	@students.each do |student|
 		data = [student[:name], student[:cohort]]
 		file.puts(data.join(","))
 	end
 	file.close
-	puts "Successfully wrote #{@students.count} students to #{@path}"
+	puts "Successfully wrote #{@students.count} students to #{path}"
 end
 
 # load students from given filepath, or defaults to students.csv
-def load_students(path = nil)
-	path ||= @path
+def load_students(path)
   file = File.open(path, "r")
   file.readlines.each do |line|
 		add_student(*line.chomp.split(","))
@@ -116,12 +125,12 @@ end
 # wrapper around load_students to handle non-existent files
 # use default filepath if non specified
 def try_load_students
-	filename = ARGV.first || @path
-	if File.exists?(filename)
-		load_students(filename)
-		puts "loaded #{@students.count} from #{filename}"
+	path = get_file_name
+	if File.exists?(path)
+		load_students(path)
+		puts "loaded #{@students.count} from #{path}"
 	else
-		puts "Sorry, #{filename} doesn't exist."
+		puts "Sorry, #{path} doesn't exist."
 		exit
 	end
 end
