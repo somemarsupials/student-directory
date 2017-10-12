@@ -106,9 +106,9 @@ def load_students(path = "students.csv")
 end
 
 # wrapper around load_students to handle non-existent files
+# use
 def try_load_students
-	filename = ARGV.first
-	return if filename.nil?
+	filename = ARGV.first || "students.csv"
 	if File.exists?(filename)
 		load_students(filename)
 			puts "loaded #{@students.count} from #{filename}"
