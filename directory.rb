@@ -19,7 +19,7 @@ end
 
 # interactive menu manager
 def interactive_menu
-  loop {
+  loop do
 		# print menu options
 		print_menu
 		# get selection
@@ -39,7 +39,7 @@ def interactive_menu
     else
       puts "Unknown option, please try again."
     end
-	}
+	end
 end
 
 # input name and cohort as a student
@@ -89,8 +89,7 @@ def save_students
 	file = File.open("students.csv", "w")
 	@students.each do |student|
 		data = [student[:name], student[:cohort]]
-		csv_line = data.join(",")
-		file.puts csv_line
+		file.puts(data.join(","))
 	end
 	file.close
 end
@@ -99,8 +98,7 @@ end
 def load_students(path = "students.csv")
   file = File.open(path, 'r')
   file.readlines.each do |line|
-		name, cohort = line.chomp.split(",")
-		add_student(name, cohort)
+		add_student(line.chomp.split(","))
   end
   file.close
 end
