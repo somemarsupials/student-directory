@@ -1,6 +1,9 @@
 # empty array for students
 @students = []
 
+# default filepath
+@path = "students.csv"
+
 # print out the options for the interactive menu
 def print_menu
 	puts "1. Input students"
@@ -56,14 +59,19 @@ def input_students
 	# create an empty array
 	# get first name
 	name = STDIN.gets.chomp
+	# number of new students
+	new = 0
 	# while name is not empty, repeat this code
 	while !name.empty?
 		# add new hash to the array
 		add_student(name, :november)
 		puts "Now we have #{@students.count} students"
+		# increment counter
+		new += 1
 		# get another name
 		name = STDIN.gets.chomp
 	end
+	puts "Added #{new} new students!"
 	@students
 end
 
@@ -86,16 +94,17 @@ end
 
 # save students to default file
 def save_students
-	file = File.open("students.csv", "w")
+	file = File.open(@path, "w")
 	@students.each do |student|
 		data = [student[:name], student[:cohort]]
 		file.puts(data.join(","))
 	end
 	file.close
+	puts "Successfully wrote #{@students.count} students to #{@path}"
 end
 
 # load students from given filepath, or defaults to students.csv
-def load_students(path = "students.csv")
+def load_students(path = @path)
   file = File.open(path, 'r')
   file.readlines.each do |line|
 		add_student(line.chomp.split(","))
@@ -106,7 +115,7 @@ end
 # wrapper around load_students to handle non-existent files
 # use
 def try_load_students
-	filename = ARGV.first || "students.csv"
+	filename = ARGV.first || @path
 	if File.exists?(filename)
 		load_students(filename)
 			puts "loaded #{@students.count} from #{filename}"
