@@ -1,3 +1,5 @@
+require 'csv'
+
 # empty array for students
 @students = []
 
@@ -104,10 +106,9 @@ end
 # save students to default file
 def save_students
 	path = get_file_name
-	File.open(path, "w") do |file|
+	CSV.open(path, "w") do |csv|
 		@students.each do |student|
-			data = [student[:name], student[:cohort]]
-			file.puts(data.join(","))
+			csv << [student[:name], student[:cohort]]
 		end
 	end
 	puts "Successfully wrote #{@students.count} students to #{path}"
@@ -115,10 +116,9 @@ end
 
 # load students from given filepath, or defaults to students.csv
 def load_students(path)
-  File.open(path, "r") do |file|
-		file.readlines.each do |line|
-			add_student(*line.chomp.split(","))
-		end
+	@students = []
+  CSV.foreach(path) do |name, cohort|
+		add_student(name, cohort)
 	end
 end
 
